@@ -61,7 +61,6 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     pavucontrol \
     qt6-qtmultimedia \
     qt6ct \
-    swaylock \
     xdg-desktop-portal \
     xdg-desktop-portal-gnome \
     xdg-desktop-portal-gtk \
