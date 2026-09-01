@@ -17,6 +17,20 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
 
+cat <<'EOF' > /etc/systemd/system/nix.mount
+[Unit]
+Description=Bind mount /var/nix to /nix
+
+[Mount]
+What=/var/nix
+Where=/nix
+Type=none
+Options=bind
+
+[Install]
+WantedBy=local-fs.target
+EOF
+
 dnf5 -y copr enable atim/starship
 dnf5 -y copr enable avengemedia/danklinux
 dnf5 -y copr enable ulysg/xwayland-satellite
@@ -29,6 +43,9 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     docker-compose-plugin \
     docker-model-plugin \
     code \
+    busybox \
+    nix \
+    nix-daemon \
     fastfetch \
     p7zip \
     p7zip-plugins \
