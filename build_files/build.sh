@@ -87,6 +87,7 @@ dnf5 -y copr disable avengemedia/danklinux
 dnf5 -y copr disable ulysg/xwayland-satellite
 
 systemctl enable docker.service docker.socket podman.socket
+systemctl enable nix.mount nix-daemon
 
 systemctl disable gdm.service
 systemctl mask gdm.service
