@@ -32,6 +32,7 @@ WantedBy=local-fs.target
 EOF
 
 dnf5 -y copr enable atim/starship
+dnf5 -y copr enable avengemedia/dms
 dnf5 -y copr enable avengemedia/danklinux
 dnf5 -y copr enable ulysg/xwayland-satellite
 
@@ -83,6 +84,7 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     playerctl
 
 dnf5 -y copr disable atim/starship
+dnf5 -y copr disable avengemedia/dms
 dnf5 -y copr disable avengemedia/danklinux
 dnf5 -y copr disable ulysg/xwayland-satellite
 
