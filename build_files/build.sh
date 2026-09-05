@@ -34,7 +34,6 @@ EOF
 dnf5 -y copr enable atim/starship
 dnf5 -y copr enable avengemedia/dms
 dnf5 -y copr enable avengemedia/danklinux
-dnf5 -y copr enable ulysg/xwayland-satellite
 
 dnf5 -y install --enablerepo=docker-ce-stable,code \
     containerd.io \
@@ -72,7 +71,7 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     xdg-desktop-portal \
     xdg-desktop-portal-gnome \
     xdg-desktop-portal-gtk \
-    xwayland-satellite \
+    https://kojipkgs.fedoraproject.org//packages/xwayland-satellite/0.8.1/1.fc44/x86_64/xwayland-satellite-0.8.1-1.fc44.x86_64.rpm \
     ark \
     dolphin \
     file-roller \
@@ -86,7 +85,6 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
 dnf5 -y copr disable atim/starship
 dnf5 -y copr disable avengemedia/dms
 dnf5 -y copr disable avengemedia/danklinux
-dnf5 -y copr disable ulysg/xwayland-satellite
 
 systemctl enable docker.service docker.socket podman.socket
 systemctl enable nix.mount nix-daemon
