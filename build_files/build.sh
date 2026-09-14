@@ -17,6 +17,16 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
 
+cat <<EOF > /etc/yum.repos.d/adoptium.repo
+[Adoptium]
+name=Adoptium
+baseurl=https://packages.adoptium.net/artifactory/rpm/fedora/\$releasever/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
+enabled_metadata=1
+EOF
+
 cat <<'EOF' > /etc/systemd/system/nix.mount
 [Unit]
 Description=Bind mount /var/nix to /nix
@@ -80,7 +90,9 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     kio-extras \
     mpv \
     openssh-server \
-    playerctl
+    playerctl \
+    temurin-8-jdk \
+    temurin-21-jdk
 
 dnf5 -y copr disable atim/starship
 dnf5 -y copr disable avengemedia/dms
