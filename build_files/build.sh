@@ -4,54 +4,27 @@ set -ouex pipefail
 
 cp -avf "/ctx/system_files"/. /
 
-dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
-sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/docker-ce.repo
+SCRIPT_DIR="/ctx/scripts"
+"$SCRIPT_DIR/01-docker.sh"
+"$SCRIPT_DIR/02-nix.sh"
+"$SCRIPT_DIR/03-vscode.sh"
 
-tee /etc/yum.repos.d/vscode.repo <<'EOF'
-[code]
-name=Visual Studio Code
-baseurl=https://packages.microsoft.com/yumrepos/vscode
-enabled=1
-gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc
-EOF
-sed -i "s/enabled=.*/enabled=0/g" /etc/yum.repos.d/vscode.repo
-
-cat <<'EOF' > /etc/systemd/system/nix.mount
-[Unit]
-Description=Bind mount /var/nix to /nix
-
-[Mount]
-What=/var/nix
-Where=/nix
-Type=none
-Options=bind
-
-[Install]
-WantedBy=local-fs.target
-EOF
-
-dnf5 -y copr enable atim/starship
 dnf5 -y copr enable avengemedia/dms
 dnf5 -y copr enable avengemedia/danklinux
+dnf5 -y copr enable atim/starship
 
 dnf5 -y install --enablerepo=docker-ce-stable,code \
-    containerd.io \
+containerd.io \
     docker-buildx-plugin \
     docker-ce \
     docker-ce-cli \
     docker-compose-plugin \
     docker-model-plugin \
-    code \
     busybox \
     nix \
     nix-daemon \
-    fastfetch \
-    p7zip \
-    p7zip-plugins \
-    stow \
-    unzip \
-    zip \
+    nix-legacy \
+    code \
     atuin \
     eza \
     kitty \
@@ -72,6 +45,12 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     xdg-desktop-portal-gnome \
     xdg-desktop-portal-gtk \
     https://kojipkgs.fedoraproject.org//packages/xwayland-satellite/0.8.1/1.fc44/x86_64/xwayland-satellite-0.8.1-1.fc44.x86_64.rpm \
+    fastfetch \
+    p7zip \
+    p7zip-plugins \
+    stow \
+    unzip \
+    zip \
     ark \
     dolphin \
     file-roller \
@@ -82,9 +61,9 @@ dnf5 -y install --enablerepo=docker-ce-stable,code \
     openssh-server \
     playerctl
 
-dnf5 -y copr disable atim/starship
 dnf5 -y copr disable avengemedia/dms
 dnf5 -y copr disable avengemedia/danklinux
+dnf5 -y copr disable atim/starship
 
 systemctl enable docker.service docker.socket podman.socket
 systemctl enable nix.mount nix-daemon
