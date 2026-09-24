@@ -14,7 +14,7 @@ dnf5 -y copr enable avengemedia/danklinux
 dnf5 -y copr enable atim/starship
 
 dnf5 -y install --enablerepo=docker-ce-stable,code \
-containerd.io \
+    containerd.io \
     docker-buildx-plugin \
     docker-ce \
     docker-ce-cli \
